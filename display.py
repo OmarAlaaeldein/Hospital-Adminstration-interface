@@ -14,10 +14,9 @@ sql = "SELECT * FROM appointments"
 res = c.execute(sql)
 for r in res:
     ids = r[0]
-    name = r[1]
+    ID = r[1]
     number.append(ids)
-    patients.append(name)
-
+    patients.append(ID)
 # window
 class Application:
     def __init__(self, master):
@@ -37,12 +36,12 @@ class Application:
         self.n = Label(master, text="", font=('arial 200 bold'))
         self.n.place(x=500, y=100)
 
-        self.pname = Label(master, text="", font=('arial 80 bold'))
-        self.pname.place(x=300, y=400)
+        self.pID = Label(master, text="", font=('arial 80 bold'))
+        self.pID.place(x=300, y=400)
     # function to speak the text and update the text
     def func(self):
         self.n.config(text=str(number[self.x]))
-        self.pname.config(text=str(patients[self.x]))
+        self.pID.config(text=str(patients[self.x]))
         engine = pyttsx3.init()
         voices = engine.getProperty('voices')
         rate = engine.getProperty('rate')
