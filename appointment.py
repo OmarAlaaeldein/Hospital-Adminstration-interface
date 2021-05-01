@@ -1,5 +1,8 @@
+from tkinter import *
 import sqlite3
-#import tkinter.messin_carebox
+import pyttsx3
+from tkinter import messagebox
+#import tkinter.messagebox
 # connect to the databse.
 conn = sqlite3.connect('database.db')
 # cursor to move around the databse
@@ -15,9 +18,9 @@ class Application:
 
         # creating the frames in the master
         self.left = Frame(master, width=800, height=720, bg='cyan')
-        self.bg = PhotoImage(file = 'bg.jpg')
+        self.bg = PhotoImage(file = 'bg.png')
         self.label = Label(self.left, image = self.bg)
-        self.label.place(x=0, y=0, relwidth = 1, relheight = 1)
+        self.label.place(x=0, y=225, relwidth = 1, relheight = 1)
         self.left.pack(side=LEFT)
 
         self.right = Frame(master, width=400, height=720, bg='steelblue')
@@ -47,9 +50,9 @@ class Application:
         self.max_ven = Label(self.left, text="Max ven", font=('arial 18 bold'), fg='black', bg='cyan')
         self.max_ven.place(x=0, y=260)
 
-        # # phone
-        # self.phone = Label(self.left, text="Phone Number", font=('arial 18 bold'), fg='black', bg='cyan')
-        # self.phone.place(x=0, y=300)
+        # date
+        self.date = Label(self.left, text="Date (dd,mm,yyyy)", font=('arial 18 bold'), fg='black', bg='cyan')
+        self.date.place(x=0, y=300)
 
         # Entries for all labels============================================================
         self.ID_ent = Entry(self.left, width=30)
@@ -67,8 +70,9 @@ class Application:
         self.max_ven_ent = Entry(self.left, width=30)
         self.max_ven_ent.place(x=280, y=260)
 
-        self.phone_ent = Entry(self.left, width=30)
-        self.phone_ent.place(x=280, y=300)
+        self.date = Entry(self.left, width=30)
+        self.date.place(x=280, y=300)
+
 
         # button to perform a command
         self.submit = Button(self.left, text="Add", width=20, height=4, bg='steelblue', command=self.add_appointment)
@@ -81,6 +85,9 @@ class Application:
             self.id = self.row[0]
             ids.append(self.id)
         
+        self.unique=[i[0] for i in c.execute("SELECT date FROM appointments ")]
+
+        
         # ordering the ids
         self.new = sorted(ids)
         self.final_id = self.new[len(ids)-1]
@@ -90,7 +97,7 @@ class Application:
 
         self.box = Text(self.right, width=50, height=40)
         self.box.place(x=20, y=60)
-        self.box.insert(END, "Total Appointments till now :  " + str(self.final_id))
+        self.box.insert(END, "Last Information Regsitered for ID  " + str(self.final_id))
     # funtion to call when the submit button is clicked
     def add_appointment(self):
         # getting the user inputs
@@ -99,20 +106,22 @@ class Application:
         self.val3 = self.ven_ent.get()
         self.val4 = self.max_bed_ent.get()
         self.val5 = self.max_ven_ent.get()
-        self.val6 = self.phone_ent.get()
+        self.val6 = self.date.get()
 
         # checking if the user input is empty
-        if self.val1 == '' or self.val2 == '' or self.val3 == '' or self.val4 == '' or self.val5 == '':
-            tkinter.messin_carebox.showinfo("Warning", "Please Fill Up All Boxes")
+        print(self.unique)
+        if self.val1 == '' or self.val2 == '' or self.val3 == '' or self.val4 == '' or self.val5 == '' or self.val6== '':
+            messagebox.showinfo("Warning", "Please Fill Up All Boxes")
+        # check if ID and Date is repeated for the smae entry
+        elif int(self.val1) in ids and self.val6 in self.unique:
+            messagebox.showinfo("Warning","Already registered for the same date and hospital ID")
         else:
             # now we add to the database
-            sql = "INSERT INTO 'appointments' (ID, in_care, ven, max_bed, scheduled_max_ven, phone) VALUES(?, ?, ?, ?, ?, ?)"
+            sql = "INSERT INTO 'appointments' (ID, in_care_ent, ven_ent, max_bed_ent, max_ven_ent, date) VALUES(?, ?, ?, ?, ?, ?)"
             c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
             conn.commit()
-            tkinter.messin_carebox.showinfo("Success", "Appointment for " +str(self.val1) + " has been created" )
-            
-
-            self.box.insert(END, 'Appointment fixed for ' + str(self.val1) + ' at ' + str(self.val5))
+            messagebox.showinfo("Success", "Information at " +str(self.val6) + " has been created" )
+            self.box.insert(END, 'information' + str(self.val1) + ' at ' + str(self.val6+'\n'))
 
 # creating the object
 root = Tk()
