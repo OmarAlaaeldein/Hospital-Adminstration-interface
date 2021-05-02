@@ -18,7 +18,7 @@ information every day:
 2. Prevent entering the same ID and date twice in our database file.
 3. .db file format is the following
 ## libraries used 
-|ID (INTEGER)  |in_care_ent (INTEGER) |ven_ent (INTEGER) |max_bed_ent (INTEGER) |max_ven_ent (int)|date (TEXT)(DD-MM-YYYY)|
+|ID (INTEGER)  |in_care_ent (INTEGER) |ven_ent (INTEGER) |max_bed_ent (INTEGER) |max_ven_ent (INTEGER)|date (TEXT)(DD-MM-YYYY)|
 |---------|---------|---------|---------|-----|------|
 |    |         |         |         |     |      |
 1. Tkinter
