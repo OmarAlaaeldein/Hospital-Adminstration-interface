@@ -22,7 +22,7 @@ information every day:
 |---------|---------|---------|---------|-----|------|
 
 
-## libraries used 
+## Libraries used 
 1. Tkinter
 2. sqlite3
 3. pyttsx3
