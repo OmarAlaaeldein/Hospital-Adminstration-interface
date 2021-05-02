@@ -15,6 +15,7 @@ information every day:
 - Number of beds occupied in their intensive care units.
 - Number of Ventilators being used
 - Maximum capacity interms of ventilators and beds in ICU.
+2. Prevent entering the same ID and date twice in our database file.
 
 ## libraries used 
 1. Tkinter
