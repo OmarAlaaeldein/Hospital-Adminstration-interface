@@ -17,10 +17,12 @@ information every day:
 - Maximum capacity interms of ventilators and beds in ICU.
 2. Prevent entering the same ID and date twice in our database file.
 3. .db file format is the following
-## libraries used 
+
 |ID (INTEGER)  |in_care_ent (INTEGER) |ven_ent (INTEGER) |max_bed_ent (INTEGER) |max_ven_ent (INTEGER)|date (TEXT)(DD-MM-YYYY)|
 |---------|---------|---------|---------|-----|------|
-|    |         |         |         |     |      |
+
+
+## libraries used 
 1. Tkinter
 2. sqlite3
 3. pyttsx3
